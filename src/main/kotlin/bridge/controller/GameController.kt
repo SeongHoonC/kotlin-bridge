@@ -5,16 +5,16 @@ import bridge.BridgeRandomNumberGenerator
 import bridge.domain.Bridge
 import bridge.domain.BridgeGame
 import bridge.domain.OneRound
-import bridge.util.*
+import bridge.domain.Validator
 import bridge.view.InputView
 import bridge.view.OutputView
 
 class GameController {
     private val outputView = OutputView()
-    private val inputView = InputView()
     private val bridgeGame = BridgeGame()
+    private val validator = Validator()
     fun run() {
-        val size = validatedSize()
+        val size = validator.validatedSize()
         val bridge = Bridge(BridgeMaker(BridgeRandomNumberGenerator()).makeBridge(size))
         startGame(bridge, size)
     }
@@ -35,18 +35,5 @@ class GameController {
     companion object {
         const val RETRY = "R"
         const val QUIT = "Q"
-    }
-
-
-    private fun validatedSize(): Int {
-        while (true) {
-            try {
-                val size = inputView.readBridgeSize().inputTypeException()
-                size.bridgeSizeException()
-                return size
-            } catch (e: IllegalArgumentException) {
-                println(e.message)
-            }
-        }
     }
 }
