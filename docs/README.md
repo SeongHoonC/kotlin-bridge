@@ -5,6 +5,26 @@
 게임의 성공 유무를 확인 - PlayerBridge
 플레이어의 행동 - BridgeGame
 
+# MVC 적용하기
+### Model
+- PlayerBridge
+  - isAlive()
+- BridgeGame
+  - move()
+  - retry()
+### Controller
+- GameController
+  - runGame()
+### View
+- InputView
+  - readBridgeSize()
+  - readMoving()
+  - readGameCommand()
+- OutputView
+    - printMap()
+    - printResult()
+
+
 # 출력예시
 다리 건너기 게임을 시작합니다. - OutputView
 
