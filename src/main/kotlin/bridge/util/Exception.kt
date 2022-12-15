@@ -1,12 +1,13 @@
 package bridge.util
 
 import bridge.data.ErrorMessage.NOT_INT
+import bridge.data.ErrorMessage.RETRY_OR_QUIT
 import bridge.data.ErrorMessage.SIZE_IN_RANGE
 import bridge.data.ErrorMessage.UP_OR_DOWN
 
-fun String.inputTypeException() {
+fun String.inputTypeException(): Int {
     try {
-        this.toInt()
+        return this.toInt()
     } catch (e: NumberFormatException) {
         throw IllegalArgumentException(NOT_INT)
     }
@@ -21,5 +22,5 @@ fun String.upOrDownException() {
 }
 
 fun String.retryOrQuitException() {
-    require(this == "R" || this == "Q") { UP_OR_DOWN }
+    require(this == "R" || this == "Q") { RETRY_OR_QUIT }
 }

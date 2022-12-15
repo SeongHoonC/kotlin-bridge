@@ -2,10 +2,9 @@ package bridge.controller
 
 import bridge.BridgeMaker
 import bridge.BridgeRandomNumberGenerator
-import bridge.data.GameMessage.CHOOSE_MOVING
-import bridge.data.GameMessage.INPUT_COMMAND
 import bridge.domain.Bridge
 import bridge.domain.BridgeGame
+import bridge.util.*
 import bridge.view.InputView
 import bridge.view.OutputView
 
@@ -14,8 +13,7 @@ class GameController {
     private val inputView = InputView()
     private val bridgeGame = BridgeGame()
     fun run() {
-        outputView.printGameStart()
-        val size = inputView.readBridgeSize()
+        val size = validatedSize()
         val bridge = Bridge(BridgeMaker(BridgeRandomNumberGenerator()).makeBridge(size))
         startGame(bridge, size)
     }
@@ -35,8 +33,7 @@ class GameController {
     private fun oneGameLife(bridgeGame: BridgeGame, bridge: Bridge): Boolean {
         val isAlive = playerMoving(bridge, bridgeGame)
         if (!isAlive) {
-            outputView.printMessage(INPUT_COMMAND)
-            val command = inputView.readGameCommand()
+            val command = validatedCommand()
             if (command == RETRY) bridgeGame.retry()
             if (command == QUIT) return false
         }
@@ -44,8 +41,8 @@ class GameController {
     }
 
     private fun playerMoving(bridge: Bridge, bridgeGame: BridgeGame): Boolean {
-        outputView.printMessage(CHOOSE_MOVING)
-        bridgeGame.move(inputView.readMoving())
+        val moving = validatedMoving()
+        bridgeGame.move(moving)
         val isSame = bridgeGame.compare(bridge)
         outputView.printMap(bridgeGame.result)
         return isSame
@@ -54,5 +51,42 @@ class GameController {
     companion object {
         const val RETRY = "R"
         const val QUIT = "Q"
+    }
+
+
+    private fun validatedSize(): Int {
+        while (true) {
+            try {
+                val size = inputView.readBridgeSize().inputTypeException()
+                size.bridgeSizeException()
+                return size
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+    }
+
+    private fun validatedMoving(): String {
+        while (true) {
+            try {
+                val moving = inputView.readMoving()
+                moving.upOrDownException()
+                return moving
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
+    }
+
+    private fun validatedCommand(): String {
+        while (true) {
+            try {
+                val moving = inputView.readGameCommand()
+                moving.retryOrQuitException()
+                return moving
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
     }
 }
