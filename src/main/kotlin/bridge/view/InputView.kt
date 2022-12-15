@@ -1,29 +1,51 @@
 package bridge.view
+
+import bridge.util.bridgeSizeException
+import bridge.util.inputTypeException
+import bridge.util.retryOrQuitException
+import bridge.util.upOrDownException
 import camp.nextstep.edu.missionutils.Console
 
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
  */
 class InputView {
-    /**
-     * 다리의 길이를 입력받는다.
-     */
+
     fun readBridgeSize(): Int {
-        val input = Console.readLine()
-        val size = input.toInt()
-        return size
+        while (true) {
+            try {
+                val input = Console.readLine()
+                input.inputTypeException()
+                val size = input.toInt()
+                size.bridgeSizeException()
+                return size
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
     }
 
     fun readMoving(): String {
-        val input = Console.readLine()
-        return input
+        while(true) {
+            try {
+                val input = Console.readLine()
+                input.upOrDownException()
+                return input
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+            }
+        }
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
-     */
     fun readGameCommand(): String {
-        val input = Console.readLine()
-        return input
+        while(true) {
+            try {
+                val input = Console.readLine()
+                input.retryOrQuitException()
+                return input
+            }catch(e:IllegalArgumentException){
+                println(e.message)
+            }
+        }
     }
 }
