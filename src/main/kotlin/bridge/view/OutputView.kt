@@ -1,20 +1,41 @@
 package bridge.view
 
-/**
- * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
- */
-class OutputView {
-    /**
-     * 현재까지 이동한 다리의 상태를 정해진 형식에 맞춰 출력한다.
-     *
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    fun printMap() {}
+import bridge.data.GameMessage
 
-    /**
-     * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
-     *
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    fun printResult() {}
+class OutputView {
+
+    fun printGameStart(){
+        println(GameMessage.GAME_START)
+        println(GameMessage.INPUT_BRIDGE_SIZE)
+    }
+    fun printMessage(message:String){
+        println(message)
+    }
+
+    fun printMap(result:List<Pair<String,String>>) {
+        val size = result.size
+        print("[")
+        repeat(size){column ->
+            print(result[column].first)
+            if(column < size -1) print("|")
+        }
+        print("]\n[")
+        repeat(size){column ->
+            print(result[column].second)
+            if(column < size -1) print("|")
+        }
+        println("]")
+    }
+
+    fun printResult(result:List<Pair<String,String>>, round:Int, isSuccess:Boolean) {
+        println(GameMessage.GAME_END)
+        printMap(result)
+
+        print(GameMessage.GAME_SUCCESS_OR_NOT)
+        if(isSuccess) println(GameMessage.SUCCESS)
+        else println(GameMessage.FAIL)
+
+        print(GameMessage.ROUND_COUNT)
+        println(round)
+    }
 }
