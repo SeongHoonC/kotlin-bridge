@@ -7,7 +7,7 @@
 
 # MVC 적용하기
 ### Model
-- PlayerBridge
+- Bridge
   - isAlive()
 - BridgeGame
   - move()

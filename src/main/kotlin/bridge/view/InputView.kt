@@ -26,7 +26,7 @@ class InputView {
     }
 
     fun readMoving(): String {
-        while(true) {
+        while (true) {
             try {
                 val input = Console.readLine()
                 input.upOrDownException()
@@ -38,12 +38,12 @@ class InputView {
     }
 
     fun readGameCommand(): String {
-        while(true) {
+        while (true) {
             try {
                 val input = Console.readLine()
                 input.retryOrQuitException()
                 return input
-            }catch(e:IllegalArgumentException){
+            } catch (e: IllegalArgumentException) {
                 println(e.message)
             }
         }

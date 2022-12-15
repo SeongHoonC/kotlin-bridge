@@ -12,13 +12,14 @@ fun String.inputTypeException() {
     }
 }
 
-fun Int.bridgeSizeException(){
-    require(this in 3..20){ SIZE_IN_RANGE}
-}
-fun String.upOrDownException() {
-    require(this == "U" || this == "D") { UP_OR_DOWN}
+fun Int.bridgeSizeException() {
+    require(this in 3..20) { SIZE_IN_RANGE }
 }
 
-fun String.retryOrQuitException(){
-    require(this == "R" || this == "Q") { UP_OR_DOWN}
+fun String.upOrDownException() {
+    require(this == "U" || this == "D") { UP_OR_DOWN }
+}
+
+fun String.retryOrQuitException() {
+    require(this == "R" || this == "Q") { UP_OR_DOWN }
 }
