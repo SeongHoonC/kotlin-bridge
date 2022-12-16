@@ -25,7 +25,6 @@ class ValidatorTest {
         }
     }
 
-
     @ValueSource(strings = ["UU", "A", "R"," "])
     @ParameterizedTest
     fun `Move 예외 처리`(input:String) {

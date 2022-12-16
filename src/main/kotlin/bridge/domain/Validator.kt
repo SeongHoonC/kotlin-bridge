@@ -9,13 +9,14 @@ class Validator {
         require(size.toInt() in MIN_RANGE_BRIDGE..MAX_RANGE_BRIDGE) {ErrorMessage.BRIDGE_RANGE_ERROR}
     }
 
-    fun validateSizeType(input: String): Int {
-        kotlin.runCatching {
-            input.toInt()
-        }
-                .onSuccess { return input.toInt() }
-                .onFailure { throw IllegalArgumentException(ErrorMessage.INPUT_TYPE_ERROR) }
-        return 0
+    fun validateSizeType(size: String) {
+        require(size.toIntOrNull() !=null ){ErrorMessage.INPUT_TYPE_ERROR}
+//        kotlin.runCatching {
+//            input.toInt()
+//        }
+//                .onSuccess { return input.toInt() }
+//                .onFailure { throw IllegalArgumentException(ErrorMessage.INPUT_TYPE_ERROR) }
+//        return 0
     }
 
     fun checkMoving(input: String) {
